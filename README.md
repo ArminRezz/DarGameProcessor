@@ -18,19 +18,19 @@ cd DarGameProcessor
 
 2. Create a virtual environment:
 ```bash
-python -m venv nba_env
+python -m venv dar_game_python_env
 ```
 
 3. Activate the virtual environment:
 
 **On macOS/Linux:**
 ```bash
-source nba_env/bin/activate
+source dar_game_python_env/bin/activate
 ```
 
 **On Windows:**
 ```bash
-nba_env\Scripts\activate
+dar_game_python_env\Scripts\activate
 ```
 
 4. Install dependencies:
@@ -40,12 +40,12 @@ pip install -r requirements.txt
 
 ### Verify Installation
 1. Confirm you're in the virtual environment:
-- Your terminal prompt should show `(nba_env)`
+- Your terminal prompt should show `(dar_game_python_env)`
 - Run `which python` (Unix) or `where python` (Windows) to verify it points to the virtual environment
 
 2. Test the installation:
 ```bash
-python nba.py
+python gui.py
 ```
 
 ### Common Issues
