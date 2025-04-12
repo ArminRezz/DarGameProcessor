@@ -74,42 +74,58 @@ def assign_public_vegas(games_df):
     
     return games_df
 
-def process_nfl_games(games_df):
+def process_nfl_games(input_file, output_file):
     """
-    Main processing function for NFL games.
-    Takes a DataFrame of games and returns the DataFrame with Public/Vegas assignments.
+    Process NFL games from input CSV and save results to output CSV.
     
     Args:
-        games_df (pandas.DataFrame): DataFrame containing NFL games
-            Required columns: ['day', 'start_time']
+        input_file (str): Path to input CSV file
+        output_file (str): Path to output CSV file
     
     Returns:
-        pandas.DataFrame: Original DataFrame with added 'assignment' column
+        pd.DataFrame: Processed games dataframe with assignments
     """
-    if games_df.empty:
-        return games_df
+    # Read NFL games data
+    nfl_games = pd.read_csv(input_file)
+    
+    # Process assignments
+    processed_games = assign_public_vegas(nfl_games)
+    
+    # Save results
+    processed_games.to_csv(output_file, index=False)
+    
+    return processed_games
+
+def main():
+    """
+    Main function to:
+    1. Read NFL games from CSV
+    2. Process assignments
+    3. Save results to new CSV
+    """
+    input_file = 'input_csvs/nfl.csv'
+    output_file = 'output_csvs/nfl_labeled.csv'
+    
+    try:
+        # Read NFL games data
+        print(f"Reading NFL games from {input_file}...")
+        nfl_games = pd.read_csv(input_file)
         
-    # Validate required columns
-    required_columns = ['day', 'start_time']
-    missing_columns = [col for col in required_columns if col not in games_df.columns]
-    if missing_columns:
-        raise ValueError(f"Missing required columns: {missing_columns}")
-    
-    # Process the games and assign Public/Vegas
-    processed_df = assign_public_vegas(games_df.copy())
-    
-    return processed_df
+        # Process assignments
+        print("Assigning Public/Vegas designations...")
+        processed_games = assign_public_vegas(nfl_games)
+        
+        # Save results
+        processed_games.to_csv(output_file, index=False)
+        print(f"Successfully saved results to {output_file}")
+        
+        # Print summary
+        print("\nAssignment Summary:")
+        summary = processed_games.groupby(['day_of_week', 'assignment']).size().reset_index(name='count')
+        print(summary.to_string(index=False))
+        
+    except Exception as e:
+        print(f"Error processing NFL games: {str(e)}")
 
 if __name__ == "__main__":
-    # Example usage
-    example_data = {
-        'day': ['2024-02-08', '2024-02-11', '2024-02-11', '2024-02-11', '2024-02-12'],
-        'start_time': ['8:20 PM', '1:00 PM', '4:25 PM', '8:20 PM', '8:15 PM'],
-        'home_team': ['Team1', 'Team2', 'Team3', 'Team4', 'Team5'],
-        'away_team': ['Team6', 'Team7', 'Team8', 'Team9', 'Team10']
-    }
-    
-    example_df = pd.DataFrame(example_data)
-    result_df = process_nfl_games(example_df)
-    print("\nProcessed NFL Games:")
-    print(result_df[['day', 'start_time', 'assignment']])
+    main()
