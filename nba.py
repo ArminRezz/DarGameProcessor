@@ -75,6 +75,28 @@ def assign_public_vegas(games_df):
     
     return games_df
 
+def process_nba_games(input_file, output_file):
+    """
+    Process NBA games from input CSV and save results to output CSV.
+    
+    Args:
+        input_file (str): Path to input CSV file
+        output_file (str): Path to output CSV file
+    
+    Returns:
+        pd.DataFrame: Processed games dataframe with assignments
+    """
+    # Read NBA games data
+    nba_games = pd.read_csv(input_file)
+    
+    # Process assignments
+    processed_games = assign_public_vegas(nba_games)
+    
+    # Save results
+    processed_games.to_csv(output_file, index=False)
+    
+    return processed_games
+
 def main():
     """
     Main function to:

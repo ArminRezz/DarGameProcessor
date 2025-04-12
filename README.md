@@ -115,7 +115,7 @@ _Follows a similar structure to NBA due to daily games:_
 _162-game season, many games per day, different start times:_
 - **Monday:** Public Day
 - **Tuesday:** Vegas Day
-- **Wednesday:** Hybrid (first half public, 5:40 PM CST Vegas)
+- **Wednesday:** Hybrid (first half public, 5:40 PM CST Vega ====> aka 6:40 PM EST)
 - **Thursday:** Vegas Day
 - **Friday:** Public Day
 - **Saturday:** Vegas Day
