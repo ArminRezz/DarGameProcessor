@@ -1,10 +1,70 @@
 # DarGameProcessor
-Script that categorizes sports games (vegas or public or hybrid)
+Categorizes sports games for MLB, NHL, NBA, NCAAB, NFL
 
+## Setup Instructions
 
-RULES THE SCRIPT USES ARE  HERE
+### Prerequisites
+- Python 3.9 or higher
+- Git (for cloning the repository)
 
-NBA (National Basketball Association)
+### Installation Steps
+
+1. Clone the repository:
+
+```bash
+git clone git@github.com:ArminRezz/DarGameProcessor.git
+cd DarGameProcessor
+```
+
+2. Create a virtual environment:
+```bash
+python -m venv nba_env
+```
+
+3. Activate the virtual environment:
+
+**On macOS/Linux:**
+```bash
+source nba_env/bin/activate
+```
+
+**On Windows:**
+```bash
+nba_env\Scripts\activate
+```
+
+4. Install dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+### Verify Installation
+1. Confirm you're in the virtual environment:
+- Your terminal prompt should show `(nba_env)`
+- Run `which python` (Unix) or `where python` (Windows) to verify it points to the virtual environment
+
+2. Test the installation:
+```bash
+python nba.py
+```
+
+### Common Issues
+If you encounter `ModuleNotFoundError`:
+1. Ensure your virtual environment is activated
+2. Try reinstalling dependencies:
+```bash
+pip install -r requirements.txt
+```
+
+### Deactivating the Environment
+When you're done working:
+```bash
+deactivate
+```
+
+### Rules Framework for Labeling
+
+##### NBA (National Basketball Association)
 
 (Applies to daily games, typically between 7 PM - 10 PM ET)
 	•	Monday (Public Day) – First game is Vegas, then alternates (7 PM same slots are all Vegas).
@@ -20,7 +80,7 @@ NBA (National Basketball Association)
 
 ⸻
 
-NFL (National Football League)
+##### NFL (National Football League)
 
 (Weekly games, different schedule from daily sports like NBA/NHL)
 	•	Thursday Night Football (Vegas Day) – Short prep week, favors Vegas lines.
@@ -34,7 +94,7 @@ NFL (National Football League)
 
 ⸻
 
-NHL (National Hockey League)
+##### NHL (National Hockey League)
 
 (Follows a similar structure to NBA due to daily games)
 	•	Monday (Public Day) – First game Vegas, then alternates.
@@ -50,7 +110,7 @@ NHL (National Hockey League)
 
 ⸻
 
-MLB (Major League Baseball)
+##### MLB (Major League Baseball)
 
 (162-game season, many games per day, different start times
 Monday: Public Day 
@@ -67,7 +127,7 @@ Sunday: Vegas Day
 
 ⸻
 
-NCAAF (College Football)
+##### NCAAF (College Football)
 
 (Mostly played on Thursdays, Fridays, and Saturdays, with some weekday games)
 	•	Thursday Games (Vegas Day) – Short rest, favors Vegas oddsmakers.
@@ -81,7 +141,7 @@ NCAAF (College Football)
 
 ⸻
 
-NCAAB (College Basketball)
+##### NCAAB (College Basketball)
 
 (Follows a daily game schedule but varies during March Madness)
 	•	Monday (Public Day) – First game Vegas, then alternates.
