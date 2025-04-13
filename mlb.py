@@ -40,7 +40,7 @@ def get_game_assignment(day_of_week, start_time):
     
     Args:
         day_of_week (str): Day of the week
-        start_time (datetime): Game start time
+        start_time (str): Game start time in format 'I:M %p EDT/EST'
     
     Returns:
         str: 'Public' or 'Vegas' assignment
@@ -49,10 +49,16 @@ def get_game_assignment(day_of_week, start_time):
         return 'Public'
     
     if is_hybrid_day(day_of_week):
-        # Convert time to EST for comparison (6:40 PM EST cutoff)
-        cutoff_hour = 18
-        cutoff_minute = 40
-        if start_time.hour < cutoff_hour or (start_time.hour == cutoff_hour and start_time.minute < cutoff_minute):
+        # Extract time without timezone for comparison
+        time_str = start_time.split(' ')[0] + ' ' + start_time.split(' ')[1]
+        time_obj = datetime.strptime(time_str, '%I:%M %p')
+        
+        # Convert to 24-hour format for comparison
+        hour = time_obj.hour
+        minute = time_obj.minute
+        
+        # 6:40 PM cutoff
+        if hour < 18 or (hour == 18 and minute < 40):
             return 'Public'
         return 'Vegas'
     
@@ -71,21 +77,17 @@ def assign_public_vegas(games_df):
     game_date = games_df['day'].iloc[0]
     day_of_week = date_to_day(game_date)
     
-    # Convert start_time strings to datetime objects, handling timezones properly
-    games_df['start_time'] = pd.to_datetime(
-        games_df['start_time'].str.replace(' EDT', '').str.replace(' EST', ''),
-        format='%I:%M %p'
-    )
-    
     # Create assignments based on day and time
     games_df['assignment'] = games_df['start_time'].apply(
         lambda x: get_game_assignment(day_of_week, x)
     )
     
     # Override for early games (1 PM - 4 PM) to favor Vegas
+    # Convert times to datetime for comparison
+    time_objects = pd.to_datetime(games_df['start_time'].str.replace(' EDT', '').str.replace(' EST', ''), format='%I:%M %p')
     early_game_mask = (
-        (games_df['start_time'].dt.hour >= 13) & 
-        (games_df['start_time'].dt.hour <= 16)
+        (time_objects.dt.hour >= 13) & 
+        (time_objects.dt.hour <= 16)
     )
     games_df.loc[early_game_mask, 'assignment'] = 'Vegas'
     
